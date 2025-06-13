@@ -16,8 +16,7 @@ public class Review {
     private int rating;
     private LocalDateTime createdAt;
 
-    // Getters and Setters
-
+    // Getters and setters
     public Long getId() {
         return id;
     }
