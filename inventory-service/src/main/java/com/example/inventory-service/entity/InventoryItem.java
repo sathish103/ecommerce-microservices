@@ -1,5 +1,6 @@
 package com.example.inventoryservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,13 +11,16 @@ public class InventoryItem {
     private Long id;
 
     private Long productId;
+
     private int stock;
 
     @ManyToOne
     @JoinColumn(name = "inventory_id")
+    @JsonBackReference
     private Inventory inventory;
 
     // Getters and Setters
+
     public Long getId() {
         return id;
     }

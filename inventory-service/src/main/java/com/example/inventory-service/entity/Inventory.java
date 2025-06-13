@@ -1,6 +1,8 @@
 package com.example.inventoryservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -12,10 +14,12 @@ public class Inventory {
 
     private String warehouseName;
 
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<InventoryItem> items;
 
     // Getters and Setters
+
     public Long getId() {
         return id;
     }
