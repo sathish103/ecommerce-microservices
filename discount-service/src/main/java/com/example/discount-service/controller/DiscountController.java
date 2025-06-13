@@ -2,25 +2,30 @@ package com.example.discountservice.controller;
 
 import com.example.discountservice.entity.Discount;
 import com.example.discountservice.service.DiscountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/discounts")
 public class DiscountController {
 
-    private final DiscountService discountService;
-
-    public DiscountController(DiscountService discountService) {
-        this.discountService = discountService;
-    }
+    @Autowired
+    private DiscountService discountService;
 
     @PostMapping
-    public Discount createOrUpdate(@RequestBody Discount discount) {
-        return discountService.createOrUpdateDiscount(discount);
+    public Discount createDiscount(@RequestBody Discount discount) {
+        return discountService.createDiscount(discount);
     }
 
-    @GetMapping("/product/{productId}")
-    public Discount getDiscount(@PathVariable Long productId) {
-        return discountService.getActiveDiscountByProductId(productId);
+    @GetMapping
+    public List<Discount> getAllDiscounts() {
+        return discountService.getAllDiscounts();
+    }
+
+    @GetMapping("/active")
+    public List<Discount> getActiveDiscounts() {
+        return discountService.getActiveDiscounts();
     }
 }

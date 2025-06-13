@@ -1,4 +1,3 @@
-
 package com.example.discountservice;
 
 import org.springframework.boot.SpringApplication;

@@ -1,73 +1,41 @@
 package com.example.discountservice.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "discounts")
 public class Discount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String code;
-    private double percentage;
-
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-
     private Long productId;
+    private double discountPercentage;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     public Discount() {}
 
-    // Getters
-    public Long getId() {
-        return id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public double getPercentage() {
-        return percentage;
-    }
-
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    // Setters
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public void setPercentage(double percentage) {
-        this.percentage = percentage;
-    }
-
-    public void setStartDate(LocalDateTime startDate) {
+    public Discount(Long productId, double discountPercentage, LocalDate startDate, LocalDate endDate) {
+        this.productId = productId;
+        this.discountPercentage = discountPercentage;
         this.startDate = startDate;
-    }
-
-    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Long getProductId() { return productId; }
+    public void setProductId(Long productId) { this.productId = productId; }
+
+    public double getDiscountPercentage() { return discountPercentage; }
+    public void setDiscountPercentage(double discountPercentage) { this.discountPercentage = discountPercentage; }
+
+    public LocalDate getStartDate() { return startDate; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+
+    public LocalDate getEndDate() { return endDate; }
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
 }

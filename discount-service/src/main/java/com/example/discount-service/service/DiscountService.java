@@ -2,27 +2,30 @@ package com.example.discountservice.service;
 
 import com.example.discountservice.entity.Discount;
 import com.example.discountservice.repository.DiscountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class DiscountService {
 
-    private final DiscountRepository discountRepository;
+    @Autowired
+    private DiscountRepository discountRepository;
 
-    public DiscountService(DiscountRepository discountRepository) {
-        this.discountRepository = discountRepository;
-    }
-
-    public Discount createOrUpdateDiscount(Discount discount) {
+    public Discount createDiscount(Discount discount) {
         return discountRepository.save(discount);
     }
 
-    public Discount getActiveDiscountByProductId(Long productId) {
-        return discountRepository.findByProductId(productId)
-            .filter(d -> d.getStartDate().isBefore(LocalDateTime.now()) &&
-                         d.getEndDate().isAfter(LocalDateTime.now()))
-            .orElse(null);
+    public List<Discount> getAllDiscounts() {
+        return discountRepository.findAll();
+    }
+
+    public List<Discount> getActiveDiscounts() {
+        LocalDate today = LocalDate.now();
+        return discountRepository.findAll().stream()
+            .filter(d -> !today.isBefore(d.getStartDate()) && !today.isAfter(d.getEndDate()))
+            .toList();
     }
 }
