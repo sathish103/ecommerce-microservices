@@ -1,5 +1,5 @@
 
-package com.example.cart-service;
+package com.example.cartservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

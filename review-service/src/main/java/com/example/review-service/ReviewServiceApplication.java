@@ -1,5 +1,5 @@
 
-package com.example.review-service;
+package com.example.reviewservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

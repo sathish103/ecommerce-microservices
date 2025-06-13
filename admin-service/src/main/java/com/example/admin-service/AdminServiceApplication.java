@@ -1,5 +1,5 @@
 
-package com.example.admin-service;
+package com.example.adminservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

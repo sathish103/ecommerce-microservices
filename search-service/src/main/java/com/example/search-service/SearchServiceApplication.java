@@ -1,5 +1,5 @@
 
-package com.example.search-service;
+package com.example.searchservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

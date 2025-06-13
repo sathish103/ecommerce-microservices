@@ -1,5 +1,5 @@
 
-package com.example.discount-service;
+package com.example.discountservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
