@@ -16,9 +16,9 @@ public class InventoryController {
         this.inventoryService = inventoryService;
     }
 
-    @PostMapping
-    public InventoryItem addItem(@RequestBody InventoryItem item) {
-        return inventoryService.addItem(item);
+    @PostMapping("/{warehouseName}")
+    public InventoryItem addItem(@RequestBody InventoryItem item, @PathVariable String warehouseName) {
+        return inventoryService.addItem(item, warehouseName);
     }
 
     @GetMapping("/{warehouseName}")
