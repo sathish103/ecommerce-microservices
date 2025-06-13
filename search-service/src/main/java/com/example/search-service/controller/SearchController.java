@@ -2,27 +2,20 @@ package com.example.searchservice.controller;
 
 import com.example.searchservice.entity.Product;
 import com.example.searchservice.service.SearchService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/products")
 public class SearchController {
+    @Autowired
+    private SearchService searchService;
 
-    private final SearchService searchService;
-
-    public SearchController(SearchService searchService) {
-        this.searchService = searchService;
-    }
+    @PostMapping
+    public Product create(@RequestBody Product p) { return searchService.createProduct(p); }
 
     @GetMapping
-    public List<Product> search(@RequestParam String keyword) {
-        return searchService.search(keyword);
-    }
-
-    @PostMapping("/index")
-    public Product index(@RequestBody Product product) {
-        return searchService.indexProduct(product);
-    }
+    public List<Product> list() { return searchService.getAllProducts(); }
 }

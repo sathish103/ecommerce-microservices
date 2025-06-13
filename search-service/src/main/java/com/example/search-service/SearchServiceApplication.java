@@ -1,4 +1,3 @@
-
 package com.example.searchservice;
 
 import org.springframework.boot.SpringApplication;
