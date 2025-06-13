@@ -11,14 +11,10 @@ public class Notification {
     private Long id;
 
     private String message;
-
     private String recipient;
-
     private String type;
-
     private LocalDateTime sentAt;
-
-    private Long userId; // ✅ missing field added here
+    private Long userId;
 
     // Getters and Setters
 
