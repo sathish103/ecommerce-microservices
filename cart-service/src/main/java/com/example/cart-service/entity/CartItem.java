@@ -12,6 +12,9 @@ public class CartItem {
     private Long productId;
     private int quantity;
 
+    @Transient  // not persisted, only used for input
+    private Long userId;
+
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;
@@ -47,5 +50,13 @@ public class CartItem {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
