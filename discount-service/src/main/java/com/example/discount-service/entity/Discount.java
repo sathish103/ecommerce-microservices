@@ -1,6 +1,8 @@
 package com.example.discountservice.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 @Entity
@@ -12,10 +14,15 @@ public class Discount {
 
     private Long productId;
     private double discountPercentage;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    public Discount() {}
+    public Discount() {
+    }
 
     public Discount(Long productId, double discountPercentage, LocalDate startDate, LocalDate endDate) {
         this.productId = productId;
@@ -24,18 +31,45 @@ public class Discount {
         this.endDate = endDate;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // Getters and Setters
 
-    public Long getProductId() { return productId; }
-    public void setProductId(Long productId) { this.productId = productId; }
+    public Long getId() {
+        return id;
+    }
 
-    public double getDiscountPercentage() { return discountPercentage; }
-    public void setDiscountPercentage(double discountPercentage) { this.discountPercentage = discountPercentage; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public LocalDate getStartDate() { return startDate; }
-    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+    public Long getProductId() {
+        return productId;
+    }
 
-    public LocalDate getEndDate() { return endDate; }
-    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public double getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(double discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 }
