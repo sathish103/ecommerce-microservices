@@ -1,9 +1,9 @@
 package com.example.paymentservice.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "payments")
 public class Payment {
 
     @Id
@@ -11,8 +11,10 @@ public class Payment {
     private Long id;
 
     private Long orderId;
-    private String paymentStatus;
-    private String paymentMethod;
+    private Double amount;
+
+    private String status; // <-- add this
+    private LocalDateTime paymentDate; // <-- and this
 
     // Getters and Setters
     public Long getId() {
@@ -31,19 +33,27 @@ public class Payment {
         this.orderId = orderId;
     }
 
-    public String getPaymentStatus() {
-        return paymentStatus;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public String getStatus() {
+        return status;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(LocalDateTime paymentDate) {
+        this.paymentDate = paymentDate;
     }
 }
