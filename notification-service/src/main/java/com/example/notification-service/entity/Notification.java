@@ -18,6 +18,8 @@ public class Notification {
 
     private LocalDateTime sentAt;
 
+    private Long userId; // ✅ missing field added here
+
     // Getters and Setters
 
     public Long getId() {
@@ -58,5 +60,13 @@ public class Notification {
 
     public void setSentAt(LocalDateTime sentAt) {
         this.sentAt = sentAt;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
