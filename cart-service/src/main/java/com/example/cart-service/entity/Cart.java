@@ -1,6 +1,7 @@
 package com.example.cartservice.entity;
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity

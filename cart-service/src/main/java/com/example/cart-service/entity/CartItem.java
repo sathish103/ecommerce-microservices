@@ -1,5 +1,6 @@
 package com.example.cartservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,11 +13,9 @@ public class CartItem {
     private Long productId;
     private int quantity;
 
-    @Transient  // not persisted, only used for input
-    private Long userId;
-
     @ManyToOne
     @JoinColumn(name = "cart_id")
+    @JsonIgnore
     private Cart cart;
 
     // Getters and Setters
@@ -50,13 +49,5 @@ public class CartItem {
 
     public void setCart(Cart cart) {
         this.cart = cart;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 }

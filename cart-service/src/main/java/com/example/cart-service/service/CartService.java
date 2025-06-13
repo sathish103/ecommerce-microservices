@@ -1,5 +1,6 @@
 package com.example.cartservice.service;
 
+import com.example.cartservice.dto.CartItemRequest;
 import com.example.cartservice.entity.Cart;
 import com.example.cartservice.entity.CartItem;
 import com.example.cartservice.repository.CartItemRepository;
@@ -7,6 +8,7 @@ import com.example.cartservice.repository.CartRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -19,17 +21,19 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public CartItem addItem(CartItem item) {
-        Long userId = item.getUserId();
-        Cart cart = cartRepository.findByUserId(userId);
+    public CartItem addItem(CartItemRequest request) {
+        Optional<Cart> existingCart = cartRepository.findByUserId(request.getUserId());
+        Cart cart = existingCart.orElseGet(() -> {
+            Cart newCart = new Cart();
+            newCart.setUserId(request.getUserId());
+            return cartRepository.save(newCart);
+        });
 
-        if (cart == null) {
-            cart = new Cart();
-            cart.setUserId(userId);
-            cart = cartRepository.save(cart);
-        }
-
+        CartItem item = new CartItem();
+        item.setProductId(request.getProductId());
+        item.setQuantity(request.getQuantity());
         item.setCart(cart);
+
         return cartItemRepository.save(item);
     }
 
