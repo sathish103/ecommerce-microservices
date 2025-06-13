@@ -20,7 +20,7 @@ public class CartService {
     }
 
     public List<CartItem> getUserCart(Long userId) {
-        return cartItemRepository.findByUserId(userId);
+        return cartItemRepository.findByCartUserId(userId);
     }
 
     public void removeItem(Long itemId) {

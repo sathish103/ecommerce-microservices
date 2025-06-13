@@ -4,6 +4,8 @@ import com.example.inventoryservice.entity.InventoryItem;
 import com.example.inventoryservice.service.InventoryService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
@@ -15,17 +17,17 @@ public class InventoryController {
     }
 
     @PostMapping
-    public InventoryItem addOrUpdate(@RequestBody InventoryItem item) {
-        return inventoryService.addOrUpdateItem(item);
+    public InventoryItem addItem(@RequestBody InventoryItem item) {
+        return inventoryService.addItem(item);
     }
 
-    @GetMapping("/{productId}")
-    public InventoryItem getInventory(@PathVariable Long productId) {
-        return inventoryService.getByProductId(productId);
+    @GetMapping("/{warehouseName}")
+    public List<InventoryItem> getItems(@PathVariable String warehouseName) {
+        return inventoryService.getItemsByWarehouse(warehouseName);
     }
 
-    @GetMapping("/check/{productId}/{quantity}")
-    public boolean checkStock(@PathVariable Long productId, @PathVariable int quantity) {
-        return inventoryService.isInStock(productId, quantity);
+    @DeleteMapping("/{itemId}")
+    public void deleteItem(@PathVariable Long itemId) {
+        inventoryService.removeItem(itemId);
     }
 }

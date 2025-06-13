@@ -1,37 +1,29 @@
 package com.example.inventoryservice.service;
 
 import com.example.inventoryservice.entity.InventoryItem;
-import com.example.inventoryservice.repository.InventoryRepository;
+import com.example.inventoryservice.repository.InventoryItemRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class InventoryService {
 
-    private final InventoryRepository inventoryRepository;
+    private final InventoryItemRepository inventoryItemRepository;
 
-    public InventoryService(InventoryRepository inventoryRepository) {
-        this.inventoryRepository = inventoryRepository;
+    public InventoryService(InventoryItemRepository inventoryItemRepository) {
+        this.inventoryItemRepository = inventoryItemRepository;
     }
 
-    public InventoryItem addOrUpdateItem(InventoryItem item) {
-        Optional<InventoryItem> existing = inventoryRepository.findByProductId(item.getProductId());
-        if (existing.isPresent()) {
-            InventoryItem updated = existing.get();
-            updated.setQuantity(item.getQuantity());
-            return inventoryRepository.save(updated);
-        }
-        return inventoryRepository.save(item);
+    public InventoryItem addItem(InventoryItem item) {
+        return inventoryItemRepository.save(item);
     }
 
-    public InventoryItem getByProductId(Long productId) {
-        return inventoryRepository.findByProductId(productId).orElse(null);
+    public List<InventoryItem> getItemsByWarehouse(String warehouseName) {
+        return inventoryItemRepository.findByInventoryWarehouseName(warehouseName);
     }
 
-    public boolean isInStock(Long productId, int quantityNeeded) {
-        return inventoryRepository.findByProductId(productId)
-                .map(item -> item.getQuantity() >= quantityNeeded)
-                .orElse(false);
+    public void removeItem(Long itemId) {
+        inventoryItemRepository.deleteById(itemId);
     }
 }

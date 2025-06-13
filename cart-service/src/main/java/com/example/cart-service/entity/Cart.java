@@ -1,9 +1,9 @@
 package com.example.cartservice.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "carts")
 public class Cart {
 
     @Id
@@ -11,8 +11,9 @@ public class Cart {
     private Long id;
 
     private Long userId;
-    private Long productId;
-    private Integer quantity;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<CartItem> items;
 
     // Getters and Setters
     public Long getId() {
@@ -31,19 +32,11 @@ public class Cart {
         this.userId = userId;
     }
 
-    public Long getProductId() {
-        return productId;
+    public List<CartItem> getItems() {
+        return items;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setItems(List<CartItem> items) {
+        this.items = items;
     }
 }

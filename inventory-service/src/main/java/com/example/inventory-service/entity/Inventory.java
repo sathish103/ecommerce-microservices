@@ -1,17 +1,19 @@
 package com.example.inventoryservice.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "inventory")
 public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long productId;
-    private Integer quantityAvailable;
+    private String warehouseName;
+
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+    private List<InventoryItem> items;
 
     // Getters and Setters
     public Long getId() {
@@ -22,19 +24,19 @@ public class Inventory {
         this.id = id;
     }
 
-    public Long getProductId() {
-        return productId;
+    public String getWarehouseName() {
+        return warehouseName;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setWarehouseName(String warehouseName) {
+        this.warehouseName = warehouseName;
     }
 
-    public Integer getQuantityAvailable() {
-        return quantityAvailable;
+    public List<InventoryItem> getItems() {
+        return items;
     }
 
-    public void setQuantityAvailable(Integer quantityAvailable) {
-        this.quantityAvailable = quantityAvailable;
+    public void setItems(List<InventoryItem> items) {
+        this.items = items;
     }
 }
