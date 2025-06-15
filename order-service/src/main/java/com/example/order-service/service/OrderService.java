@@ -19,8 +19,6 @@ public class OrderService {
     public Order createOrder(Order order) {
         order.setCreatedAt(LocalDateTime.now());
         order.setStatus("PENDING");
-
-        // Automatically sets order reference in each OrderItem
         return orderRepository.save(order);
     }
 
