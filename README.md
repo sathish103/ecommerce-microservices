@@ -19,17 +19,18 @@ nohup java -jar discount-service-0.0.1-SNAPSHOT.jar > output.log 2>&1 &
 nohup java -jar search-service-0.0.1-SNAPSHOT.jar > output.log 2>&1 &
 
 
-http://18.142.43.188:8081/users
-http://18.142.43.188:8081/products
-http://18.142.43.188:8081/orders
-http://18.142.43.188:8081/cart
-http://18.142.43.188:8081/payments
-http://18.142.43.188:8081/inventory
-http://18.142.43.188:8081/notifications
-http://18.142.43.188:8081/reviews
-http://18.142.43.188:8081/admin
-http://18.142.43.188:8081/discounts
-http://18.142.43.188:8081/search
+http://3.14.129.187:8081/users
+http://3.14.129.187:8082/products
+http://3.14.129.187:8083/orders
+http://3.14.129.187:8084/cart
+http://3.14.129.187:8085/payments
+http://3.14.129.187:8086/inventory
+http://3.14.129.187:8087/notifications
+http://3.14.129.187:8088/reviews
+http://3.14.129.187:8089/admin
+http://3.14.129.187:8090/discounts
+http://3.14.129.187:8091/search
+
 
 # End User Flow (Before and After Login)
 When hitting https://shopping.devopscicd.xyz

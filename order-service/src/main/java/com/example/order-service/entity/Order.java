@@ -1,5 +1,6 @@
 package com.example.orderservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,32 +18,60 @@ public class Order {
     private String status;
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<OrderItem> items;
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public Long getId() {
+        return id;
+    }
 
-    public Double getTotalAmount() { return totalAmount; }
-    public void setTotalAmount(Double totalAmount) { this.totalAmount = totalAmount; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public Long getUserId() {
+        return userId;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-    public List<OrderItem> getItems() { return items; }
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
     public void setItems(List<OrderItem> items) {
         this.items = items;
         if (items != null) {
-            for (OrderItem item : items) {
-                item.setOrder(this);
-            }
+            items.forEach(item -> item.setOrder(this));
         }
     }
 }
