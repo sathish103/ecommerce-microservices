@@ -46,7 +46,7 @@ public class InventoryService {
     public InventoryItem updateItem(Long itemId, InventoryItem updatedItem) {
         return itemRepo.findById(itemId).map(item -> {
             item.setProductId(updatedItem.getProductId());
-            item.setQuantity(updatedItem.getQuantity());
+            item.setStock(updatedItem.getStock()); // ✅ fixed
             return itemRepo.save(item);
         }).orElse(null);
     }

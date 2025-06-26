@@ -12,8 +12,11 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String code; // ✅ Added
+    private boolean active; // ✅ Added
+    private double percentage; // ✅ Replaces discountPercentage
+
     private Long productId;
-    private double discountPercentage;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
@@ -24,9 +27,9 @@ public class Discount {
     public Discount() {
     }
 
-    public Discount(Long productId, double discountPercentage, LocalDate startDate, LocalDate endDate) {
+    public Discount(Long productId, double percentage, LocalDate startDate, LocalDate endDate) {
         this.productId = productId;
-        this.discountPercentage = discountPercentage;
+        this.percentage = percentage;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -49,12 +52,28 @@ public class Discount {
         this.productId = productId;
     }
 
-    public double getDiscountPercentage() {
-        return discountPercentage;
+    public double getPercentage() {
+        return percentage;
     }
 
-    public void setDiscountPercentage(double discountPercentage) {
-        this.discountPercentage = discountPercentage;
+    public void setPercentage(double percentage) {
+        this.percentage = percentage;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public LocalDate getStartDate() {
@@ -71,22 +90,5 @@ public class Discount {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
-    }
-
-    // 🔥 Add these methods to fix service call issues
-
-    public String getCode() {
-        return "DISCOUNT" + id; // placeholder, or make code a field if needed
-    }
-
-    public double getPercentage() {
-        return this.discountPercentage;
-    }
-
-    public boolean isActive() {
-        LocalDate today = LocalDate.now();
-        return (startDate != null && endDate != null)
-                && !today.isBefore(startDate)
-                && !today.isAfter(endDate);
     }
 }
