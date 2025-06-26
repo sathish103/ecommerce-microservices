@@ -3,6 +3,7 @@ package com.example.userservice.controller;
 import com.example.userservice.entity.User;
 import com.example.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +34,19 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
-        User created = userService.createUser(user); // Use the same logic as createUser
+        User created = userService.createUser(user);
         return ResponseEntity.ok(created);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User loginUser) {
+        Optional<User> user = userService.getUserByEmail(loginUser.getEmail());
+
+        if (user.isPresent() && user.get().getPassword().equals(loginUser.getPassword())) {
+            return ResponseEntity.ok(user.get()); // Later replace with JWT
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
     }
 
     @PutMapping("/{id}")
