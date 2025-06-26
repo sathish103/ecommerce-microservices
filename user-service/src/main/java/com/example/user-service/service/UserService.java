@@ -1,3 +1,4 @@
+// src/main/java/com/example/userservice/service/UserService.java
 
 package com.example.userservice.service;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -22,6 +24,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Optional<User> getUserByEmail(String email) { // ✅ Added for login
+        return userRepository.findByEmail(email);
+    }
+
     public User createUser(User user) {
         return userRepository.save(user);
     }
@@ -30,6 +36,7 @@ public class UserService {
         return userRepository.findById(id).map(user -> {
             user.setName(updatedUser.getName());
             user.setEmail(updatedUser.getEmail());
+            user.setPassword(updatedUser.getPassword()); // ✅ include password
             return userRepository.save(user);
         }).orElse(null);
     }

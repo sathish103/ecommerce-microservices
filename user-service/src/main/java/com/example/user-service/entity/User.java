@@ -1,3 +1,4 @@
+// src/main/java/com/example/userservice/entity/User.java
 
 package com.example.userservice.entity;
 
@@ -5,11 +6,16 @@ import jakarta.persistence.*;
 
 @Entity
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String email;
+    private String password; // ✅ Add password field
+
+    // --- Getters & Setters ---
 
     public Long getId() {
         return id;
@@ -34,5 +40,12 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-}
 
+    public String getPassword() {              // ✅ getter
+        return password;
+    }
+
+    public void setPassword(String password) { // ✅ setter
+        this.password = password;
+    }
+}

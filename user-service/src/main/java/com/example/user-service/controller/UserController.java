@@ -32,18 +32,20 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    // ✅ Registration endpoint
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
         User created = userService.createUser(user);
         return ResponseEntity.ok(created);
     }
 
+    // ✅ Login endpoint
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginUser) {
         Optional<User> user = userService.getUserByEmail(loginUser.getEmail());
 
         if (user.isPresent() && user.get().getPassword().equals(loginUser.getPassword())) {
-            return ResponseEntity.ok(user.get()); // Later replace with JWT
+            return ResponseEntity.ok(user.get()); // 🔐 In future, replace with JWT token
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
