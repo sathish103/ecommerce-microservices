@@ -7,12 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "https://demo.devopscicd.xyz", allowCredentials = "true") // Optional if not globally set
+@CrossOrigin(origins = "https://demo.devopscicd.xyz", allowCredentials = "true")
 public class UserController {
 
     @Autowired
@@ -28,7 +27,6 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
-
         if (user.isPresent()) {
             User u = user.get();
             u.setPassword(null);
@@ -63,7 +61,13 @@ public class UserController {
 
             if (matches) {
                 user.setPassword(null); // Hide password in response
-                return ResponseEntity.ok(user);
+
+                // 🔐 Send token and user in response object
+                Map<String, Object> response = new HashMap<>();
+                response.put("token", "dummy-token"); // Replace with JWT later
+                response.put("user", user);
+
+                return ResponseEntity.ok(response);
             }
         }
 
