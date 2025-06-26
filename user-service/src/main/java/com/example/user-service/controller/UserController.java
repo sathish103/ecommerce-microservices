@@ -28,10 +28,14 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
-        return user.map(u -> {
+
+        if (user.isPresent()) {
+            User u = user.get();
             u.setPassword(null);
             return ResponseEntity.ok(u);
-        }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found"));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
     }
 
     @PostMapping("/register")
