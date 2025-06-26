@@ -5,6 +5,7 @@ import com.example.paymentservice.repository.PaymentRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PaymentService {
@@ -23,5 +24,9 @@ public class PaymentService {
 
     public Payment getPaymentById(Long id) {
         return paymentRepository.findById(id).orElse(null);
+    }
+
+    public List<Payment> getAllPayments() {
+        return paymentRepository.findAll(); // ✅ added
     }
 }

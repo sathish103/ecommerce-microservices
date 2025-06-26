@@ -26,7 +26,7 @@ public class InventoryController {
         return inventoryService.getItemsByWarehouse(warehouseName);
     }
 
-    @DeleteMapping("/{itemId}")
+    @DeleteMapping("/item/{itemId}")
     public void deleteItem(@PathVariable Long itemId) {
         inventoryService.removeItem(itemId);
     }

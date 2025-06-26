@@ -8,14 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/search")  // 🔁 Changed from /products to /search
 public class SearchController {
+
     @Autowired
     private SearchService searchService;
 
     @PostMapping
-    public Product create(@RequestBody Product p) { return searchService.createProduct(p); }
+    public Product create(@RequestBody Product p) {
+        return searchService.createProduct(p);
+    }
 
     @GetMapping
-    public List<Product> list() { return searchService.getAllProducts(); }
+    public List<Product> list() {
+        return searchService.getAllProducts();
+    }
 }

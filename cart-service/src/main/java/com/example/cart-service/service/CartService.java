@@ -41,6 +41,10 @@ public class CartService {
         return cartItemRepository.findByCartUserId(userId);
     }
 
+    public List<CartItem> getAllItems() {
+        return cartItemRepository.findAll(); // ✅ Added method
+    }
+
     public void removeItem(Long itemId) {
         cartItemRepository.deleteById(itemId);
     }

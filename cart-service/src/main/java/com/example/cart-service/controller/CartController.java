@@ -22,6 +22,12 @@ public class CartController {
         return cartService.addItem(request);
     }
 
+    // New: Get all cart items (optional for admin or debugging)
+    @GetMapping
+    public List<CartItem> getAllCartItems() {
+        return cartService.getAllItems();
+    }
+
     @GetMapping("/{userId}")
     public List<CartItem> getCart(@PathVariable Long userId) {
         return cartService.getUserCart(userId);

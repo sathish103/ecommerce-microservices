@@ -32,17 +32,17 @@ http://3.14.129.187:8090/discounts
 http://3.14.129.187:8091/search
 
 
-http://3.14.129.187:8081/users
-http://3.14.129.187:8082/products
-http://3.14.129.187:8083/orders/1
-http://3.14.129.187:8084/cart/1
-http://3.14.129.187:8085/payments/1
-http://3.14.129.187:8086/inventory/1
-http://3.14.129.187:8087/notifications
-http://3.14.129.187:8088/reviews
-http://3.14.129.187:8089/admin
-http://3.14.129.187:8090/discounts
-http://3.14.129.187:8091/products
+http://18.219.186.62:8081/users
+http://18.219.186.62:8082/products
+http://18.219.186.62:8083/orders/1
+http://18.219.186.62:8084/cart/1
+http://18.219.186.62:8085/payments/1
+http://18.219.186.62:8086/inventory/1
+http://18.219.186.62:8087/notifications
+http://18.219.186.62:8088/reviews
+http://18.219.186.62:8089/admin
+http://18.219.186.62:8090/discounts
+http://18.219.186.62:8091/products
 
 
 

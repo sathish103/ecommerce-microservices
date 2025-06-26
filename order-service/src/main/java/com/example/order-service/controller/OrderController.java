@@ -30,4 +30,10 @@ public class OrderController {
     public List<Order> getOrdersByUserId(@PathVariable Long userId) {
         return orderService.getOrdersByUserId(userId);
     }
+
+    // ✅ NEW: Get all orders (for endpoint: /orders)
+    @GetMapping
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
+    }
 }

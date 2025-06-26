@@ -4,6 +4,8 @@ import com.example.paymentservice.entity.Payment;
 import com.example.paymentservice.service.PaymentService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/payments")
 public class PaymentController {
@@ -22,5 +24,10 @@ public class PaymentController {
     @GetMapping("/{id}")
     public Payment getPayment(@PathVariable Long id) {
         return paymentService.getPaymentById(id);
+    }
+
+    @GetMapping
+    public List<Payment> getAllPayments() {
+        return paymentService.getAllPayments(); // ✅ added
     }
 }
