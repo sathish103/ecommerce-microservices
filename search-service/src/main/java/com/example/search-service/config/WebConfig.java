@@ -1,4 +1,4 @@
-package com.example.userservice.config;
+package com.example.searchservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
