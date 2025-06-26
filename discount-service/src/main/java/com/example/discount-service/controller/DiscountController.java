@@ -28,4 +28,19 @@ public class DiscountController {
     public List<Discount> getActiveDiscounts() {
         return discountService.getActiveDiscounts();
     }
+
+    @GetMapping("/{id}")
+    public Discount getDiscountById(@PathVariable Long id) {
+        return discountService.getDiscountById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Discount updateDiscount(@PathVariable Long id, @RequestBody Discount discount) {
+        return discountService.updateDiscount(id, discount);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteDiscount(@PathVariable Long id) {
+        discountService.deleteDiscount(id);
+    }
 }

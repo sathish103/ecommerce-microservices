@@ -22,4 +22,23 @@ public class ReviewService {
     public List<Review> getAllReviews() {
         return reviewRepository.findAll();
     }
+
+    public Review getReviewById(Long id) {
+        return reviewRepository.findById(id).orElse(null);
+    }
+
+    public Review updateReview(Long id, Review updatedReview) {
+        return reviewRepository.findById(id).map(existing -> {
+            existing.setProductId(updatedReview.getProductId());
+            existing.setUserId(updatedReview.getUserId());
+            existing.setRating(updatedReview.getRating());
+            existing.setComment(updatedReview.getComment());
+            existing.setCreatedAt(LocalDateTime.now());
+            return reviewRepository.save(existing);
+        }).orElse(null);
+    }
+
+    public void deleteReview(Long id) {
+        reviewRepository.deleteById(id);
+    }
 }

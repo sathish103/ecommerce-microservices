@@ -23,4 +23,19 @@ public class AdminUserController {
     public List<AdminUser> getAllAdminUsers() {
         return service.getAllAdminUsers();
     }
+
+    @GetMapping("/{id}")
+    public AdminUser getAdminUserById(@PathVariable Long id) {
+        return service.getAdminUserById(id);
+    }
+
+    @PutMapping("/{id}")
+    public AdminUser updateAdminUser(@PathVariable Long id, @RequestBody AdminUser user) {
+        return service.updateAdminUser(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAdminUser(@PathVariable Long id) {
+        service.deleteAdminUser(id);
+    }
 }

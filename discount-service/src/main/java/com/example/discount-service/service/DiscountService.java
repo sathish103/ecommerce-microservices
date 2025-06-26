@@ -29,4 +29,23 @@ public class DiscountService {
             .filter(d -> !today.isBefore(d.getStartDate()) && !today.isAfter(d.getEndDate()))
             .toList();
     }
+
+    public Discount getDiscountById(Long id) {
+        return discountRepository.findById(id).orElse(null);
+    }
+
+    public Discount updateDiscount(Long id, Discount updatedDiscount) {
+        return discountRepository.findById(id).map(existing -> {
+            existing.setCode(updatedDiscount.getCode());
+            existing.setPercentage(updatedDiscount.getPercentage());
+            existing.setActive(updatedDiscount.isActive());
+            existing.setStartDate(updatedDiscount.getStartDate());
+            existing.setEndDate(updatedDiscount.getEndDate());
+            return discountRepository.save(existing);
+        }).orElse(null);
+    }
+
+    public void deleteDiscount(Long id) {
+        discountRepository.deleteById(id);
+    }
 }

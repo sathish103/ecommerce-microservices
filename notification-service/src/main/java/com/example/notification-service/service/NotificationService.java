@@ -22,4 +22,21 @@ public class NotificationService {
     public List<Notification> getAllNotifications() {
         return notificationRepository.findAll();
     }
+
+    public Notification getNotificationById(Long id) {
+        return notificationRepository.findById(id).orElse(null);
+    }
+
+    public Notification updateNotification(Long id, Notification updatedNotification) {
+        return notificationRepository.findById(id).map(existing -> {
+            existing.setUserId(updatedNotification.getUserId());
+            existing.setMessage(updatedNotification.getMessage());
+            existing.setSentAt(LocalDateTime.now());
+            return notificationRepository.save(existing);
+        }).orElse(null);
+    }
+
+    public void deleteNotification(Long id) {
+        notificationRepository.deleteById(id);
+    }
 }

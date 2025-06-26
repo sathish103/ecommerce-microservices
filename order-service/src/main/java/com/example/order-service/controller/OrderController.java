@@ -21,6 +21,11 @@ public class OrderController {
         return orderService.createOrder(order);
     }
 
+    @GetMapping
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
+    }
+
     @GetMapping("/{id}")
     public Order getOrder(@PathVariable Long id) {
         return orderService.getOrderById(id);
@@ -31,9 +36,13 @@ public class OrderController {
         return orderService.getOrdersByUserId(userId);
     }
 
-    // ✅ NEW: Get all orders (for endpoint: /orders)
-    @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    @PutMapping("/{id}")
+    public Order updateOrder(@PathVariable Long id, @RequestBody Order updatedOrder) {
+        return orderService.updateOrder(id, updatedOrder);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.deleteOrder(id);
     }
 }

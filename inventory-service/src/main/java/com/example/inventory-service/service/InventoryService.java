@@ -35,6 +35,22 @@ public class InventoryService {
         return itemRepo.findByInventoryWarehouseName(warehouseName);
     }
 
+    public List<InventoryItem> getAllItems() {
+        return itemRepo.findAll();
+    }
+
+    public InventoryItem getItemById(Long itemId) {
+        return itemRepo.findById(itemId).orElse(null);
+    }
+
+    public InventoryItem updateItem(Long itemId, InventoryItem updatedItem) {
+        return itemRepo.findById(itemId).map(item -> {
+            item.setProductId(updatedItem.getProductId());
+            item.setQuantity(updatedItem.getQuantity());
+            return itemRepo.save(item);
+        }).orElse(null);
+    }
+
     public void removeItem(Long itemId) {
         itemRepo.deleteById(itemId);
     }

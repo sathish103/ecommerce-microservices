@@ -28,6 +28,16 @@ public class PaymentController {
 
     @GetMapping
     public List<Payment> getAllPayments() {
-        return paymentService.getAllPayments(); // ✅ added
+        return paymentService.getAllPayments();
+    }
+
+    @PutMapping("/{id}")
+    public Payment updatePayment(@PathVariable Long id, @RequestBody Payment payment) {
+        return paymentService.updatePayment(id, payment);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePayment(@PathVariable Long id) {
+        paymentService.deletePayment(id);
     }
 }

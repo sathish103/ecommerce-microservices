@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PaymentService {
@@ -27,6 +28,19 @@ public class PaymentService {
     }
 
     public List<Payment> getAllPayments() {
-        return paymentRepository.findAll(); // ✅ added
+        return paymentRepository.findAll();
+    }
+
+    public Payment updatePayment(Long id, Payment updatedPayment) {
+        return paymentRepository.findById(id).map(payment -> {
+            payment.setOrderId(updatedPayment.getOrderId());
+            payment.setAmount(updatedPayment.getAmount());
+            payment.setStatus(updatedPayment.getStatus());
+            return paymentRepository.save(payment);
+        }).orElse(null);
+    }
+
+    public void deletePayment(Long id) {
+        paymentRepository.deleteById(id);
     }
 }

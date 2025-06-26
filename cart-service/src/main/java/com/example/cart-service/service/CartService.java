@@ -42,10 +42,18 @@ public class CartService {
     }
 
     public List<CartItem> getAllItems() {
-        return cartItemRepository.findAll(); // ✅ Added method
+        return cartItemRepository.findAll();
     }
 
     public void removeItem(Long itemId) {
         cartItemRepository.deleteById(itemId);
+    }
+
+    public CartItem updateItem(Long itemId, CartItemRequest request) {
+        return cartItemRepository.findById(itemId).map(item -> {
+            item.setQuantity(request.getQuantity());
+            item.setProductId(request.getProductId()); // Optional: update product too
+            return cartItemRepository.save(item);
+        }).orElse(null);
     }
 }

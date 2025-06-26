@@ -22,4 +22,20 @@ public class AdminUserService {
     public List<AdminUser> getAllAdminUsers() {
         return repository.findAll();
     }
+
+    public AdminUser getAdminUserById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public AdminUser updateAdminUser(Long id, AdminUser updatedUser) {
+        return repository.findById(id).map(existing -> {
+            existing.setUsername(updatedUser.getUsername());
+            existing.setPassword(updatedUser.getPassword());
+            return repository.save(existing);
+        }).orElse(null);
+    }
+
+    public void deleteAdminUser(Long id) {
+        repository.deleteById(id);
+    }
 }

@@ -30,8 +30,20 @@ public class OrderService {
         return orderRepository.findByUserId(userId);
     }
 
-    // ✅ New method to get all orders
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
+    }
+
+    public Order updateOrder(Long id, Order updatedOrder) {
+        return orderRepository.findById(id).map(order -> {
+            order.setStatus(updatedOrder.getStatus());
+            order.setTotalAmount(updatedOrder.getTotalAmount());
+            // Optionally update other fields
+            return orderRepository.save(order);
+        }).orElse(null);
+    }
+
+    public void deleteOrder(Long id) {
+        orderRepository.deleteById(id);
     }
 }
