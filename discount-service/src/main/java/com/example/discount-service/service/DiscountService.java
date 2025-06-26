@@ -25,6 +25,7 @@ public class DiscountService {
     public List<Discount> getActiveDiscounts() {
         LocalDate today = LocalDate.now();
         return discountRepository.findAll().stream()
+            .filter(d -> d.getStartDate() != null && d.getEndDate() != null)
             .filter(d -> !today.isBefore(d.getStartDate()) && !today.isAfter(d.getEndDate()))
             .toList();
     }
