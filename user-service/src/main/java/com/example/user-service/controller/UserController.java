@@ -27,28 +27,36 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
-    }
-
-    // ✅ Registration endpoint
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody User user) {
+        if (user.getEmail() == null || user.getPassword() == null || user.getPassword().isEmpty()) {
+            return ResponseEntity.badRequest().body("Email and password must not be empty.");
+        }
+
+        if (userService.getUserByEmail(user.getEmail()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already registered.");
+        }
+
         User created = userService.createUser(user);
+        created.setPassword(null); // Don't expose password
         return ResponseEntity.ok(created);
     }
 
-    // ✅ Login endpoint
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginUser) {
-        Optional<User> user = userService.getUserByEmail(loginUser.getEmail());
+        Optional<User> userOptional = userService.getUserByEmail(loginUser.getEmail());
 
-        if (user.isPresent() && user.get().getPassword().equals(loginUser.getPassword())) {
-            return ResponseEntity.ok(user.get()); // 🔐 In future, replace with JWT token
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            boolean matches = userService.verifyPassword(loginUser.getPassword(), user.getPassword());
+
+            if (matches) {
+                user.setPassword(null); // Hide password in response
+                return ResponseEntity.ok(user);
+            }
         }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }
 
     @PutMapping("/{id}")
