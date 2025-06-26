@@ -12,19 +12,26 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "https://demo.devopscicd.xyz", allowCredentials = "true") // Optional if not globally set
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping
-    public List<User> getUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> users = userService.getAllUsers();
+        users.forEach(user -> user.setPassword(null));
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
-    public Optional<User> getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+        Optional<User> user = userService.getUserById(id);
+        return user.map(u -> {
+            u.setPassword(null);
+            return ResponseEntity.ok(u);
+        }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found"));
     }
 
     @PostMapping("/register")
@@ -38,8 +45,8 @@ public class UserController {
         }
 
         User created = userService.createUser(user);
-        created.setPassword(null); // Don't expose password
-        return ResponseEntity.ok(created);
+        created.setPassword(null); // Hide password
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PostMapping("/login")
@@ -60,12 +67,23 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
+        User updated = userService.updateUser(id, user);
+        if (updated != null) {
+            updated.setPassword(null);
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        if (userService.getUserById(id).isPresent()) {
+            userService.deleteUser(id);
+            return ResponseEntity.ok("User deleted");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
     }
 }
