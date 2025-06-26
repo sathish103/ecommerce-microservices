@@ -3,9 +3,9 @@ package com.example.userservice.service;
 import com.example.userservice.entity.User;
 import com.example.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +14,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -30,13 +28,17 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        // Hash password
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // For demo: encode password using Base64 (not secure — just to mimic hashing)
+        user.setPassword(encodePassword(user.getPassword()));
         return userRepository.save(user);
     }
 
-    public boolean verifyPassword(String rawPassword, String hashedPassword) {
-        return passwordEncoder.matches(rawPassword, hashedPassword);
+    public boolean verifyPassword(String rawPassword, String encodedPassword) {
+        return encodePassword(rawPassword).equals(encodedPassword);
+    }
+
+    private String encodePassword(String password) {
+        return Base64.getEncoder().encodeToString(password.getBytes());
     }
 
     public User updateUser(Long id, User updatedUser) {
@@ -45,7 +47,7 @@ public class UserService {
             user.setEmail(updatedUser.getEmail());
 
             if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
-                user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+                user.setPassword(encodePassword(updatedUser.getPassword()));
             }
 
             return userRepository.save(user);
