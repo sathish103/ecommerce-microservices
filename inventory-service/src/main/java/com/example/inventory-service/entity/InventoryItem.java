@@ -45,6 +45,10 @@ public class InventoryItem {
         this.stock = stock;
     }
 
+    public int getQuantity() { // 🔥 This fixes the getQuantity() error
+        return stock;
+    }
+
     public Inventory getInventory() {
         return inventory;
     }

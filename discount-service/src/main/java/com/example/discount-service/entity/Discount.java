@@ -72,4 +72,21 @@ public class Discount {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+    // 🔥 Add these methods to fix service call issues
+
+    public String getCode() {
+        return "DISCOUNT" + id; // placeholder, or make code a field if needed
+    }
+
+    public double getPercentage() {
+        return this.discountPercentage;
+    }
+
+    public boolean isActive() {
+        LocalDate today = LocalDate.now();
+        return (startDate != null && endDate != null)
+                && !today.isBefore(startDate)
+                && !today.isAfter(endDate);
+    }
 }
